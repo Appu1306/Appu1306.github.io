@@ -3,22 +3,20 @@
 <title>reCaptcha validation demo</title>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
-        function PostContact(){
+        function PostContactDetails(){
 
 
           var response = grecaptcha.getResponse();
           console.log(response);
           if(response.length == 0) 
           {
-            alert("Please verify you are human");
+            alert("Click on the recaptcha");
           }
           else{
             let name = document.getElementById("fullName").value;
-          console.log(name);
-          let endurl = `http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName?Name=${name}`
-          let response = fetch(endurl)
+          let url = `http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName?Name=${name}`
+          let response = fetch(url)
           .then(data => {
-          console.log(data.json()); 
           })
           }
 
@@ -29,12 +27,12 @@
 <body>
 <div class="form_container">
 <form  id="my_captcha_form">
-<label>Full Name : </label>
+<label>Enter your Full Name : </label>
 <input type="text"  id="fullName">
 <div class="g-recaptcha" 
 data-sitekey="6LfWywkkAAAAADUyj31W3YI-xztjaJhtygqU6CsE" ></div>
 <p>
-<button type="submit" id="myBtn" onclick="PostContact()">Submit</button>
+<button type="submit" onclick="PostContactDetails()">Submit</button>
 </p>
 </form>
 </div>
