@@ -1,17 +1,22 @@
 <html>
 <head>
-<title>reCAPTCHA demo: Explicit render after an onload callback</title>
-<script type="text/javascript">
-      var onloadCallback = function() {
-        grecaptcha.render('html_element', {
-          'sitekey' : '6LfWywkkAAAAADUyj31W3YI-xztjaJhtygqU6CsE'
-        });
-      };
-      function PostContact(){
-          console.log('Hello')
-          var x = document.getElementById("fullName").value;
-          var params = JSON.stringify({"Name": x});
+<title>reCaptcha validation demo</title>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+        function PostContact(){
+
+
+          var response = grecaptcha.getResponse();
+          console.log(response);
+          if(response.length == 0) 
+          {
+            alert("Please verify you are human");
+          }
+          else{
+            let name = document.getElementById("fullName").value;
+          console.log(name);
           let request = new XMLHttpRequest();
+                var params = JSON.stringify({"Name": name});
           request.open("POST",`http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName`);
           request.send(params);
           request.onload = () => {
@@ -24,19 +29,21 @@
               console.log(`error ${request.status} ${request.statusText}`);
             }
           }
-      }
+          }
+        }
 </script>
 </head>
 <body>
-<form action="?" method="POST">
+<div class="form_container">
+<form  id="my_captcha_form">
 <label>Full Name : </label>
-<input type="text" value="fullName" id="fullName">
-<div id="html_element"></div>
-<br>
-<button type="submit" value="Submit" onclick="PostContact()">
+<input type="text"  id="fullName">
+<div class="g-recaptcha" 
+data-sitekey="6LfWywkkAAAAADUyj31W3YI-xztjaJhtygqU6CsE" ></div>
+<p>
+<button type="submit" id="myBtn" onclick="PostContact()">Submit</button>
+</p>
 </form>
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-</script>
+</div>
 </body>
 </html>
