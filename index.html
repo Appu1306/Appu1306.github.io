@@ -15,21 +15,14 @@
           else{
             let name = document.getElementById("fullName").value;
           console.log(name);
-          let request = new XMLHttpRequest();
-                var params = JSON.stringify({"Name": name});
-          request.open("POST",`http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName`);
-          request.send(params);
-          request.onload = () => {
-            console.log(request);
-            if(request.status == 200)
-            {
-              console.log(JSON.parse(request.response));
-            }
-            else{
-              console.log(`error ${request.status} ${request.statusText}`);
-            }
+          let endurl = `http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName?Name=${name}`
+          let response = fetch(endurl)
+          .then(data => {
+          console.log(data.json()); 
+          })
           }
-          }
+
+
         }
 </script>
 </head>
