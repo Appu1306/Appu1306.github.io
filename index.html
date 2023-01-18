@@ -4,23 +4,18 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
         function PostContactDetails(){
-
-
           var response = grecaptcha.getResponse();
           console.log(response);
-          if(response.length == 0) 
+          if(response.length > 0) 
           {
-            alert("Click on the recaptcha");
+                  let name = document.getElementById("fullName").value;
+                  let url = `http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName?Name=${name}`
+                  let response = fetch(url)
+                  .then(data => {})
           }
           else{
-            let name = document.getElementById("fullName").value;
-          let url = `http://localhost:93/0/ServiceModel/UsrAnonymousConfigurationService.svc/GetContactIdByName?Name=${name}`
-          let response = fetch(url)
-          .then(data => {
-          })
+                  alert("Click on the recaptcha");
           }
-
-
         }
 </script>
 </head>
